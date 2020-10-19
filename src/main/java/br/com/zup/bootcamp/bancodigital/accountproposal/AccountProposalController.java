@@ -24,10 +24,10 @@ public class AccountProposalController {
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity stepOne(@Valid @RequestBody StepOneAccountProposal stepOneAccountProposal,
+	public ResponseEntity stepOne(@Valid @RequestBody InitAccountProposalRequest initAccountProposalRequest,
 	                              UriComponentsBuilder uriBuilder) {
 
-		AccountProposal accountProposal = stepOneAccountProposal.createAccountProposal();
+		AccountProposal accountProposal = initAccountProposalRequest.createAccountProposal();
 		entityManager.persist(accountProposal);
 
 		UriComponents uriComponents = uriBuilder.path("/account-proposal/{id}").buildAndExpand(accountProposal.getId());
