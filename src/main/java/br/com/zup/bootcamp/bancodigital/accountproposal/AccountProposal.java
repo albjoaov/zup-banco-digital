@@ -1,6 +1,6 @@
 package br.com.zup.bootcamp.bancodigital.accountproposal;
 
-import br.com.zup.bootcamp.bancodigital.validators.MoreThan18;
+import br.com.zup.bootcamp.bancodigital.validators.MoreThan18Years;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.Column;
@@ -36,7 +36,7 @@ public class AccountProposal {
 
 	@NotNull
 	@Past
-	@MoreThan18
+	@MoreThan18Years
 	@Column(nullable = false)
 	private LocalDate birthDate;
 
