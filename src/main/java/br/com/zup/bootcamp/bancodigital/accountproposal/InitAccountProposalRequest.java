@@ -12,7 +12,7 @@ import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
 @JsonAutoDetect (fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class StepOneAccountProposal {
+public class InitAccountProposalRequest {
 
 	@NotBlank
 	private String name;

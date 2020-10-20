@@ -32,4 +32,11 @@ public class GlobalExceptionHandler {
 			return new ApiErrorReturn(fieldError.getField(), message);
 		}).collect(Collectors.toList());
 	}
+
+	@ResponseStatus (code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler (javax.persistence.EntityNotFoundException.class)
+	public ApiErrorReturn handleInvalidId (javax.persistence.EntityNotFoundException exception) {
+		return new ApiErrorReturn("id", exception.getMessage());
+	}
+
 }
