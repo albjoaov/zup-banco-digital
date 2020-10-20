@@ -3,11 +3,13 @@ package br.com.zup.bootcamp.bancodigital.accountproposal;
 import br.com.zup.bootcamp.bancodigital.validators.MoreThan18Years;
 import org.hibernate.validator.constraints.br.CPF;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -45,6 +47,8 @@ public class AccountProposal {
 	@Column(nullable = false)
 	private String cpf;
 
+	@OneToOne(cascade = CascadeType.MERGE)
+	private Address address;
 
 	/**
 	 * Framework usage only!
@@ -54,6 +58,14 @@ public class AccountProposal {
 	@Deprecated
 	public AccountProposal () { }
 
+	/**
+	 * Used to init account proposal process
+	 * @param name customer name
+	 * @param lastName customer last name
+ 	 * @param email customer email
+	 * @param birthDate customer birthDate
+	 * @param cpf customer cpf
+	 */
 	public AccountProposal (@NotBlank String name,
 	                        @NotBlank String lastName,
 	                        @Email @NotBlank String email,
@@ -68,5 +80,9 @@ public class AccountProposal {
 
 	public Long getId () {
 		return id;
+	}
+
+	public void addAddress (Address newAddress) {
+		this.address = newAddress;
 	}
 }
