@@ -82,7 +82,7 @@ public class AccountProposal {
 		return id;
 	}
 
-	public void addAddress (Address newAddress) {
-		this.address = newAddress;
+	public void setAddress (Address address) {
+		this.address = address;
 	}
 }
