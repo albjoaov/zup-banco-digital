@@ -14,11 +14,11 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/account-proposal")
-public class AccountProposalController {
+public class InitAccountProposalController {
 
 	private final EntityManager entityManager;
 
-	public AccountProposalController (EntityManager entityManager) {
+	public InitAccountProposalController (EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 
