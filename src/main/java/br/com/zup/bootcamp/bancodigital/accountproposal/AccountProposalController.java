@@ -1,6 +1,7 @@
 package br.com.zup.bootcamp.bancodigital.accountproposal;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/account-proposal")
@@ -30,7 +32,26 @@ public class AccountProposalController {
 		AccountProposal accountProposal = initAccountProposalRequest.createAccountProposal();
 		entityManager.persist(accountProposal);
 
-		UriComponents uriComponents = uriBuilder.path("/account-proposal/{id}").buildAndExpand(accountProposal.getId());
+		URI uri = uriBuilder
+							.path("/api/account-proposal/{id}/step-two")
+							.buildAndExpand(accountProposal.getId())
+							.toUri();
+
+		return ResponseEntity.created(uri).build();
+	}
+
+	@PostMapping("/{id}/step-two}")
+	@Transactional
+	public ResponseEntity stepTwo (@PathVariable Long id,
+	                               @Valid @RequestBody IncludeAddressToAccountProposalRequest includeAddressToAccountProposalRequest,
+	                               UriComponentsBuilder uriBuilder) {
+
+		var accountProposal = entityManager.find(AccountProposal.class, id);
+
+		Address newAddress = includeAddressToAccountProposalRequest.createAddress();
+		accountProposal.addAddress(newAddress);
+
+		UriComponents uriComponents = uriBuilder.path("/api/account-proposal/{id}/step-three").buildAndExpand(id);
 		return ResponseEntity.created(uriComponents.toUri()).build();
 	}
 }
