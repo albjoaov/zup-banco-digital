@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping ("/account-proposal")
@@ -41,14 +42,11 @@ public class IncludeAddressToAccountController {
 	                               UriComponentsBuilder uriBuilder) {
 
 		Address newAddress = includeAddressToAccountProposalRequest.createAddress();
-		AccountProposal accountProposal;
-		try {
-			accountProposal = entityManager.getReference(AccountProposal.class, id);
-			accountProposal.setAddress(newAddress);
-			this.entityManager.merge(accountProposal);
-		} catch (EntityNotFoundException | IllegalArgumentException e) {
-			throw new EntityNotFoundException(invalidAccountProposalIdMessage);
-		}
+
+		var accountProposalOptional = Optional.ofNullable(this.entityManager.find(AccountProposal.class, id));
+		var accountProposal = accountProposalOptional.orElseThrow(() -> new EntityNotFoundException(invalidAccountProposalIdMessage));
+		accountProposal.setAddress(newAddress);
+		this.entityManager.merge(accountProposal);
 
 		UriComponents uriComponents = uriBuilder.path("/account-proposal/{id}/step-three").buildAndExpand(id);
 		return ResponseEntity.created(uriComponents.toUri()).build();
