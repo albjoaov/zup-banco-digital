@@ -1,5 +1,6 @@
-package br.com.zup.bootcamp.bancodigital.accountproposal;
+package br.com.zup.bootcamp.bancodigital.accountproposal.init;
 
+import br.com.zup.bootcamp.bancodigital.accountproposal.AccountProposal;
 import br.com.zup.bootcamp.bancodigital.validators.MoreThan18Years;
 import br.com.zup.bootcamp.bancodigital.validators.Unique;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

@@ -1,5 +1,6 @@
-package br.com.zup.bootcamp.bancodigital.accountproposal;
+package br.com.zup.bootcamp.bancodigital.accountproposal.address;
 
+import br.com.zup.bootcamp.bancodigital.accountproposal.AccountProposal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.bancodigital.accountproposal;
+package br.com.zup.bootcamp.bancodigital.accountproposal.address;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
