@@ -33,7 +33,7 @@ public class AccountProposalController {
 		entityManager.persist(accountProposal);
 
 		URI uri = uriBuilder
-							.path("/api/account-proposal/{id}/step-two")
+							.path("/account-proposal/{id}/step-two")
 							.buildAndExpand(accountProposal.getId())
 							.toUri();
 
@@ -46,6 +46,7 @@ public class AccountProposalController {
 	                               @Valid @RequestBody IncludeAddressToAccountProposalRequest includeAddressToAccountProposalRequest,
 	                               UriComponentsBuilder uriBuilder) {
 
+		// checar nulidade?
 		var accountProposal = entityManager.find(AccountProposal.class, id);
 
 		Address newAddress = includeAddressToAccountProposalRequest.createAddress();
