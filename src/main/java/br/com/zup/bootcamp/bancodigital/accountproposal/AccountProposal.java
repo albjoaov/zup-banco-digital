@@ -1,5 +1,6 @@
 package br.com.zup.bootcamp.bancodigital.accountproposal;
 
+import br.com.zup.bootcamp.bancodigital.accountproposal.address.Address;
 import br.com.zup.bootcamp.bancodigital.validators.MoreThan18Years;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -50,6 +51,10 @@ public class AccountProposal {
 	@OneToOne(cascade = CascadeType.MERGE)
 	private Address address;
 
+	@Column (nullable = false)
+	@NotBlank
+	private String cpfFileUrl;
+
 	/**
 	 * Framework usage only!
 	 * Don't use this constructor. Maintain your system health using the right constructors
@@ -84,5 +89,9 @@ public class AccountProposal {
 
 	public void setAddress (Address address) {
 		this.address = address;
+	}
+
+	public void setCpfFileUrl (String cpfFileUrl) {
+		this.cpfFileUrl = cpfFileUrl;
 	}
 }
