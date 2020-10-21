@@ -38,7 +38,7 @@ public class AccountProposal {
 
 	@Email
 	@NotBlank
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String email;
 
 	@NotNull
@@ -49,7 +49,7 @@ public class AccountProposal {
 
 	@CPF
 	@NotBlank
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String cpf;
 
 	@OneToOne(cascade = CascadeType.MERGE)
