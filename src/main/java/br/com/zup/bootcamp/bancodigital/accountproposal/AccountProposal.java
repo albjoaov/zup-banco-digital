@@ -11,11 +11,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.ConstraintViolationException;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.groups.Default;
 import java.time.LocalDate;
+
+import static br.com.zup.bootcamp.bancodigital.validators.ValidationUtils.validator;
 
 @Entity
 public class AccountProposal {
@@ -49,10 +53,11 @@ public class AccountProposal {
 	private String cpf;
 
 	@OneToOne(cascade = CascadeType.MERGE)
+	@NotNull(groups = StepTwoGroup.class)
 	private Address address;
 
-	@Column (nullable = false)
-	@NotBlank
+	@Column
+	@NotBlank(groups = StepThreeGroup.class)
 	private String cpfFileUrl;
 
 	/**
@@ -88,10 +93,16 @@ public class AccountProposal {
 	}
 
 	public void setAddress (Address address) {
+		var stateErrors = validator.validate(this, Default.class);
+		if(!stateErrors.isEmpty()) throw new ConstraintViolationException("Invalid states has been found", stateErrors);
+
 		this.address = address;
 	}
 
 	public void setCpfFileUrl (String cpfFileUrl) {
+		var stateErrors = validator.validate(this, Default.class, StepTwoGroup.class);
+		if(!stateErrors.isEmpty()) throw new ConstraintViolationException("Invalid states has been found", stateErrors);
+
 		this.cpfFileUrl = cpfFileUrl;
 	}
 }
