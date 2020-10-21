@@ -42,10 +42,10 @@ public class IncludeAddressToAccountController {
 	                               @Valid @RequestBody IncludeAddressToAccountProposalRequest includeAddressToAccountProposalRequest,
 	                               UriComponentsBuilder uriBuilder) {
 
-		Address newAddress = includeAddressToAccountProposalRequest.createAddress();
-
 		var accountProposalOptional = Optional.ofNullable(this.entityManager.find(AccountProposal.class, id));
 		var accountProposal = accountProposalOptional.orElseThrow(() -> new EntityNotFoundException(invalidAccountProposalIdMessage));
+
+		Address newAddress = includeAddressToAccountProposalRequest.createAddress();
 		accountProposal.setAddress(newAddress);
 		this.entityManager.merge(accountProposal);
 
