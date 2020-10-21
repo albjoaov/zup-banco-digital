@@ -1,5 +1,6 @@
-package br.com.zup.bootcamp.bancodigital.accountproposal;
+package br.com.zup.bootcamp.bancodigital.accountproposal.init;
 
+import br.com.zup.bootcamp.bancodigital.accountproposal.AccountProposal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

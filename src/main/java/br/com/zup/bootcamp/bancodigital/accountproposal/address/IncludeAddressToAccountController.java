@@ -1,5 +1,6 @@
-package br.com.zup.bootcamp.bancodigital.accountproposal;
+package br.com.zup.bootcamp.bancodigital.accountproposal.address;
 
+import br.com.zup.bootcamp.bancodigital.accountproposal.AccountProposal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class IncludeAddressToAccountController {
 
 	/**
 	 * A fim de não expor dados internos da aplicação, mesmo que à priori inofensivos, a mensagem da exceção
-	 * será substituída
+	 * para a entidade não encontrada será substituída
 	 */
 	@PostMapping ("/{id}/step-two")
 	@Transactional
@@ -41,10 +42,10 @@ public class IncludeAddressToAccountController {
 	                               @Valid @RequestBody IncludeAddressToAccountProposalRequest includeAddressToAccountProposalRequest,
 	                               UriComponentsBuilder uriBuilder) {
 
-		Address newAddress = includeAddressToAccountProposalRequest.createAddress();
-
 		var accountProposalOptional = Optional.ofNullable(this.entityManager.find(AccountProposal.class, id));
 		var accountProposal = accountProposalOptional.orElseThrow(() -> new EntityNotFoundException(invalidAccountProposalIdMessage));
+
+		Address newAddress = includeAddressToAccountProposalRequest.createAddress();
 		accountProposal.setAddress(newAddress);
 		this.entityManager.merge(accountProposal);
 
