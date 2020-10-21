@@ -34,7 +34,7 @@ public class IncludeAddressToAccountController {
 
 	/**
 	 * A fim de não expor dados internos da aplicação, mesmo que à priori inofensivos, a mensagem da exceção
-	 * será substituída
+	 * para a entidade não encontrada será substituída
 	 */
 	@PostMapping ("/{id}/step-two")
 	@Transactional

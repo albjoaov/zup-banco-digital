@@ -35,6 +35,10 @@ public class UploadCpfController {
 		this.uploader = uploader;
 	}
 
+	/**
+	 * A fim de não expor dados internos da aplicação, mesmo que à priori inofensivos, a mensagem da exceção
+	 * para a entidade não encontrada será substituída
+	 */
 	@PostMapping(value = "/{id}/step-three", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Transactional
 	public ResponseEntity stepThree(@PathVariable Long id,
@@ -43,7 +47,6 @@ public class UploadCpfController {
 
 		var accountProposalOptional = Optional.ofNullable(this.entityManager.find(AccountProposal.class, id));
 		var accountProposal = accountProposalOptional.orElseThrow(() -> new EntityNotFoundException(invalidAccountProposalIdMessage));
-
 
 		String cpfFileUrl= uploadCpfRequest.uploadFileAndGetLocation(uploader);
 		accountProposal.setCpfFileUrl(cpfFileUrl);
