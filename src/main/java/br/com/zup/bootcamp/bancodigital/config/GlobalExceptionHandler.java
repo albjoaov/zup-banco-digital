@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ResponseStatus (code = HttpStatus.BAD_REQUEST)
-	@ExceptionHandler (MethodArgumentNotValidException.class)
+	@ExceptionHandler (BindException.class)
 	public List<ApiErrorReturn> handleControllerValidationWithMultipartFormData (BindException exception) {
 
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
@@ -47,8 +48,8 @@ public class GlobalExceptionHandler {
 	}
 
 	@ResponseStatus (code = HttpStatus.NOT_FOUND)
-	@ExceptionHandler (javax.persistence.EntityNotFoundException.class)
-	public ApiErrorReturn handleInvalidId (javax.persistence.EntityNotFoundException exception) {
+	@ExceptionHandler (EntityNotFoundException.class)
+	public ApiErrorReturn handleInvalidId (EntityNotFoundException exception) {
 		return new ApiErrorReturn("id", exception.getMessage());
 	}
 
