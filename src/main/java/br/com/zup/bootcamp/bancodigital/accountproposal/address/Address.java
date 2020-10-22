@@ -64,4 +64,28 @@ public class Address {
 		this.city = city;
 		this.state = state;
 	}
+
+	public String getCep () {
+		return cep;
+	}
+
+	public String getStreet () {
+		return street;
+	}
+
+	public String getNeighborhood () {
+		return neighborhood;
+	}
+
+	public String getComplement () {
+		return complement;
+	}
+
+	public String getCity () {
+		return city;
+	}
+
+	public String getState () {
+		return state;
+	}
 }
