@@ -38,7 +38,7 @@ public class AccountProposal {
 
 	@Email
 	@NotBlank
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String email;
 
 	@NotNull
@@ -49,7 +49,7 @@ public class AccountProposal {
 
 	@CPF
 	@NotBlank
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String cpf;
 
 	@OneToOne(cascade = CascadeType.MERGE)
@@ -92,6 +92,34 @@ public class AccountProposal {
 		return id;
 	}
 
+	public String getName () {
+		return name;
+	}
+
+	public String getLastName () {
+		return lastName;
+	}
+
+	public String getEmail () {
+		return email;
+	}
+
+	public LocalDate getBirthDate () {
+		return birthDate;
+	}
+
+	public String getCpf () {
+		return cpf;
+	}
+
+	public Address getAddress () {
+		return address;
+	}
+
+	public String getCpfFileUrl () {
+		return cpfFileUrl;
+	}
+
 	public void setAddress (Address address) {
 		var stateErrors = validator.validate(this, Default.class);
 		if(!stateErrors.isEmpty()) throw new ConstraintViolationException("Invalid states has been found", stateErrors);
@@ -104,5 +132,10 @@ public class AccountProposal {
 		if(!stateErrors.isEmpty()) throw new ConstraintViolationException("Invalid states has been found", stateErrors);
 
 		this.cpfFileUrl = cpfFileUrl;
+	}
+
+	public void checkIfProcessIsComplete () {
+		var stateErrors = validator.validate(this, Default.class, StepTwoGroup.class, StepThreeGroup.class);
+		if(!stateErrors.isEmpty()) throw new ConstraintViolationException("Invalid states has been found", stateErrors);
 	}
 }

@@ -4,6 +4,7 @@ import br.com.zup.bootcamp.bancodigital.accountproposal.AccountProposal;
 import br.com.zup.bootcamp.bancodigital.validators.MoreThan18Years;
 import br.com.zup.bootcamp.bancodigital.validators.Unique;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
+@JsonIgnoreProperties (ignoreUnknown = true)
 @JsonAutoDetect (fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class InitAccountProposalRequest {
 
