@@ -1,10 +1,12 @@
 package br.com.zup.bootcamp.bancodigital.accountproposal.address;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+@JsonIgnoreProperties (ignoreUnknown = true)
 @JsonAutoDetect (fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class IncludeAddressToAccountProposalRequest {
 
