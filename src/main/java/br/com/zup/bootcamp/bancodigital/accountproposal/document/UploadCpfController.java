@@ -1,7 +1,7 @@
 package br.com.zup.bootcamp.bancodigital.accountproposal.document;
 
 import br.com.zup.bootcamp.bancodigital.accountproposal.AccountProposal;
-import br.com.zup.bootcamp.bancodigital.shared.Uploader;
+import br.com.zup.bootcamp.bancodigital.shared.upload.Uploader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.MediaType;
