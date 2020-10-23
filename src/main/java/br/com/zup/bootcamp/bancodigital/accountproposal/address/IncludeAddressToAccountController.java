@@ -45,7 +45,7 @@ public class IncludeAddressToAccountController {
 		var accountProposalOptional = Optional.ofNullable(this.entityManager.find(AccountProposal.class, id));
 		var accountProposal = accountProposalOptional.orElseThrow(() -> new EntityNotFoundException(invalidAccountProposalIdMessage));
 
-		Address newAddress = includeAddressToAccountProposalRequest.createAddress();
+		Address newAddress = includeAddressToAccountProposalRequest.toModel();
 		accountProposal.setAddress(newAddress);
 		this.entityManager.merge(accountProposal);
 
