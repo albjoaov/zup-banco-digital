@@ -31,14 +31,14 @@ public class AcceptAccountProposalController {
 	private final EntityManager entityManager;
 
 	private final Mailer mailer; //1
-	private final DocumentIntegrityChecker documentIntegrityChecker; //2
+	private final DocumentCheckerAndHandler documentCheckerAndHandler; //2
 
 	public AcceptAccountProposalController (EntityManager entityManager,
 	                                        Mailer mailer,
-	                                        DocumentIntegrityChecker documentIntegrityChecker) {
+	                                        DocumentCheckerAndHandler documentCheckerAndHandler) {
 		this.entityManager = entityManager;
 		this.mailer = mailer;
-		this.documentIntegrityChecker = documentIntegrityChecker;
+		this.documentCheckerAndHandler = documentCheckerAndHandler;
 	}
 
 	@PostMapping("/{id}/step-five/accept")
@@ -55,29 +55,8 @@ public class AcceptAccountProposalController {
 		new Thread(() -> {
 			//6
 //			DocumentStatus documentStatus = this.documentIntegrityChecker.check(accountProposal);
-			this.documentIntegrityChecker.check2(accountProposal);
+			this.documentCheckerAndHandler.checkAndHandle(accountProposal);
 			// Fiz a contagem passando a responsabilidade pro checker (que passa a virar um check handler)
-
-			// documentStatus.handle(this.entityManager, accountProposal, this.mailer);
-
-			// 7
-//			if (documentStatus == DocumentStatus.SUCCESS) {
-//				accountProposal.setDocumentStatus(documentStatus);
-//				this.entityManager.merge(accountProposal);
-//
-//				// 8
-//				Account account = new Account(accountProposal);
-//				this.entityManager.persist(account);
-//
-//				// 9
-//				Email email = new Email("","", accountProposal.getEmail());
-//				this.mailer.send(email);
-//
-//				// 10
-//			} else {
-//				accountProposal.setDocumentStatus(documentStatus);
-//				this.entityManager.merge(accountProposal);
-//			}
 		}).start();
 
 		return ResponseEntity.ok().build();

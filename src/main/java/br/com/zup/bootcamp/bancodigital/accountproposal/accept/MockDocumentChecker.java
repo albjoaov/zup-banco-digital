@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
 
 @Service
 @PropertySource (value = "classpath:RetryConfig.properties", encoding = "UTF-8")
-public class MockDocumentIntegrityChecker implements DocumentIntegrityChecker {
+public class MockDocumentChecker implements DocumentCheckerAndHandler {
 
 	private final EntityManager entityManager;
 	private final Mailer mailer; //1
@@ -24,9 +24,9 @@ public class MockDocumentIntegrityChecker implements DocumentIntegrityChecker {
 	private static final String FAKE_SUCCESS_URI = "https://api.mocki.io/v1/b254cfd0";
 	private static final String FAKE_ERROR_URI = "https://api.mocki.io/v1/c74ecc16 ";
 
-	public MockDocumentIntegrityChecker (EntityManager entityManager,
-	                                     Mailer mailer,
-	                                     RestTemplate httpClient) {
+	public MockDocumentChecker (EntityManager entityManager,
+	                            Mailer mailer,
+	                            RestTemplate httpClient) {
 		this.entityManager = entityManager;
 		this.mailer = mailer;
 		this.httpClient = httpClient;
@@ -53,7 +53,7 @@ public class MockDocumentIntegrityChecker implements DocumentIntegrityChecker {
 
 	// 2
 	@Transactional
-	public void check2 (AccountProposal accountProposal) {
+	public void checkAndHandle (AccountProposal accountProposal) {
 		//3
 		var documentIntegrityCheckerRequest = new DocumentIntegrityCheckerRequest(accountProposal);
 		var documentStatusResponse = httpClient.postForObject(FAKE_SUCCESS_URI, documentIntegrityCheckerRequest, DocumentIntegrityCheckerResponse.class);
