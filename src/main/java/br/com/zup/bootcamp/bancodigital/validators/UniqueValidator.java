@@ -4,8 +4,10 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintValidator;
@@ -31,12 +33,12 @@ public class UniqueValidator implements ConstraintValidator<Unique, Object> {
 	@Override
 	@Transactional
 	public boolean isValid (Object propValueThatMustBeUnique, ConstraintValidatorContext context) {
-		final var criteriaBuilder = entityManager.getCriteriaBuilder();
-		final var criteriaQuery = criteriaBuilder.createQuery();
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Object> criteriaQuery = criteriaBuilder.createQuery();
 
 		Root<?> from = criteriaQuery.from(entityClass);
 		Path<Object> columnThatMustBeUnique = from.get(this.entityField);
-		var condition = criteriaBuilder.equal(columnThatMustBeUnique, propValueThatMustBeUnique);
+		Predicate condition = criteriaBuilder.equal(columnThatMustBeUnique, propValueThatMustBeUnique);
 
 		CriteriaQuery<Object> queryWithWhere = criteriaQuery.select(from).where(condition);
 
