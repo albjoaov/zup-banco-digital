@@ -3,8 +3,7 @@ package br.com.zup.bootcamp.bancodigital.accountproposal.accept;
 import br.com.zup.bootcamp.bancodigital.accountproposal.AccountProposal;
 
 @FunctionalInterface
-public interface DocumentCheckerAndHandler {
+public interface DocumentIntegrityChecker {
 
-	void checkAndHandle (AccountProposal accountProposal);
-//	DocumentStatus heck2 (AccountProposal accountProposal);
+	DocumentStatus check (AccountProposal accountProposal);
 }

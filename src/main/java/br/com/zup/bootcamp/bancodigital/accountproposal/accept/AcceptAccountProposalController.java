@@ -1,7 +1,6 @@
 package br.com.zup.bootcamp.bancodigital.accountproposal.accept;
 
 import br.com.zup.bootcamp.bancodigital.accountproposal.AccountProposal;
-import br.com.zup.bootcamp.bancodigital.shared.mail.Mailer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.ResponseEntity;
@@ -17,46 +16,36 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping ("/account-proposal")
-@PropertySource (value = { "classpath:ValidationMessages.properties", "classpath:MailConfig.properties" }, encoding = "UTF-8")
-public class AcceptAccountProposalController {
+@PropertySource (value = {"classpath:ValidationMessages.properties"}, encoding = "UTF-8")
+public class AcceptAccountProposalController { // 6
 
 	@Value ("${id.invalid}")
 	private String invalidAccountProposalIdMessage;
 
-	@Value("${account-accept.mail.subject}")
-	private String rejectMailSubject;
-	@Value("${account-accept.mail.body}")
-	private String rejectMailBody;
-
 	private final EntityManager entityManager;
 
-	private final Mailer mailer; //1
-	private final DocumentCheckerAndHandler documentCheckerAndHandler; //2
+	private final DocumentIntegrityChecker documentIntegrityChecker;
+	private final DocumentIntegrityHandler documentIntegrityHandler;
 
 	public AcceptAccountProposalController (EntityManager entityManager,
-	                                        Mailer mailer,
-	                                        DocumentCheckerAndHandler documentCheckerAndHandler) {
+	                                        DocumentIntegrityChecker documentIntegrityChecker,
+	                                        DocumentIntegrityHandler documentIntegrityHandler) {
 		this.entityManager = entityManager;
-		this.mailer = mailer;
-		this.documentCheckerAndHandler = documentCheckerAndHandler;
+		this.documentIntegrityChecker = documentIntegrityChecker;
+		this.documentIntegrityHandler = documentIntegrityHandler;
 	}
 
 	@PostMapping("/{id}/step-five/accept")
 	@Transactional
 	public ResponseEntity acceptAccountProposal(@PathVariable Long id) {
 
-		//3 account proposal
 		AccountProposal foundAccountProposal = this.entityManager.find(AccountProposal.class, id);
 		var accountProposalOptional = Optional.ofNullable(foundAccountProposal);
 		var accountProposal = accountProposalOptional.orElseThrow(() -> new EntityNotFoundException(this.invalidAccountProposalIdMessage));
-		//4 funcao como argumento no throw
 
-		//5 funcao como argumento
 		new Thread(() -> {
-			//6
-//			DocumentStatus documentStatus = this.documentIntegrityChecker.check(accountProposal);
-			this.documentCheckerAndHandler.checkAndHandle(accountProposal);
-			// Fiz a contagem passando a responsabilidade pro checker (que passa a virar um check handler)
+			DocumentStatus documentStatus = this.documentIntegrityChecker.check(accountProposal);
+			this.documentIntegrityHandler.handle(documentStatus, accountProposal);
 		}).start();
 
 		return ResponseEntity.ok().build();
