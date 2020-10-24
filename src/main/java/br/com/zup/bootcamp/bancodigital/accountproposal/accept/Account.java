@@ -11,10 +11,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-import static java.lang.Math.random;
+import static br.com.zup.bootcamp.bancodigital.shared.RandomUtils.randomNumberGeneratorWithLeadingZeros;
 import static java.math.BigDecimal.ZERO;
 
 /**
@@ -56,20 +54,10 @@ public class Account {
 
 	public Account (@NotNull AccountProposal accountProposal) {
 		this.accountProposal = accountProposal;
-		this.agency = this.randomNumberGeneratorWithLeadingZeros(4);
-		this.number = this.randomNumberGeneratorWithLeadingZeros(8);
-		this.bankCode = this.randomNumberGeneratorWithLeadingZeros(3);
+		this.agency = randomNumberGeneratorWithLeadingZeros(4);
+		this.number = randomNumberGeneratorWithLeadingZeros(8);
+		this.bankCode = randomNumberGeneratorWithLeadingZeros(3);
 		this.balance = ZERO;
 	}
 
-	private String randomNumberGeneratorWithLeadingZeros(int digitAmount) {
-		int min = 0;
-		int max = 10; // exclusive
-
-		return IntStream
-				.generate(() -> (int) (random() * (max - min) + min))
-				.limit(digitAmount)
-				.mapToObj(String::valueOf)
-				.collect(Collectors.joining());
-	}
 }
