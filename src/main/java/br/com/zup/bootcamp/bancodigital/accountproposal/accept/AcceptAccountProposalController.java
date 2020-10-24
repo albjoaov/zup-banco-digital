@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @RestController
@@ -36,7 +35,6 @@ public class AcceptAccountProposalController { // 6
 	}
 
 	@PostMapping("/{id}/step-five/accept")
-	@Transactional
 	public ResponseEntity acceptAccountProposal(@PathVariable Long id) {
 
 		AccountProposal foundAccountProposal = this.entityManager.find(AccountProposal.class, id);

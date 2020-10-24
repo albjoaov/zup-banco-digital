@@ -6,6 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 @Service
 @PropertySource (value = {"classpath:MailConfig.properties"}, encoding = "UTF-8")
@@ -22,6 +23,7 @@ public class MockDocumentIntegrityHandler implements DocumentIntegrityHandler {
 	} // 5
 
 	@Override
+	@Transactional
 	public void handle (DocumentStatus documentStatus, AccountProposal accountProposal) {
 
 		if (documentStatus == DocumentStatus.SUCCESS) {
