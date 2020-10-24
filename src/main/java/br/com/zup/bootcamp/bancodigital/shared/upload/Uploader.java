@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.bancodigital.shared;
+package br.com.zup.bootcamp.bancodigital.shared.upload;
 
 import org.springframework.web.multipart.MultipartFile;
 

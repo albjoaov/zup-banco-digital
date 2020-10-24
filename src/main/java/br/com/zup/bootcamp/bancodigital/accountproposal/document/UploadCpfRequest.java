@@ -1,6 +1,6 @@
 package br.com.zup.bootcamp.bancodigital.accountproposal.document;
 
-import br.com.zup.bootcamp.bancodigital.shared.Uploader;
+import br.com.zup.bootcamp.bancodigital.shared.upload.Uploader;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;

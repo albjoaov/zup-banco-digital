@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint (validatedBy = MoreThan18YearsValidator.class)
 public @interface MoreThan18Years {
 
-	String message() default "{birthDate.invalid}";
+	String message() default "{account-proposal.birthDate.invalid}";
 
 	Class<?>[] groups() default { };
 

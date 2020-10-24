@@ -1,7 +1,7 @@
 package br.com.zup.bootcamp.bancodigital.accountproposal.document;
 
 import br.com.zup.bootcamp.bancodigital.accountproposal.AccountProposal;
-import br.com.zup.bootcamp.bancodigital.shared.Uploader;
+import br.com.zup.bootcamp.bancodigital.shared.upload.Uploader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.MediaType;
@@ -24,7 +24,7 @@ import java.util.Optional;
 @PropertySource (value = "classpath:ValidationMessages.properties", encoding = "UTF-8")
 public class UploadCpfController {
 
-	@Value ("${id.invalid}")
+	@Value ("${account-proposal.id.invalid}")
 	private String invalidAccountProposalIdMessage;
 
 	private final EntityManager entityManager;

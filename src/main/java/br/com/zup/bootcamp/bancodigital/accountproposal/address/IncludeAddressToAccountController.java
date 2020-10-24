@@ -23,7 +23,7 @@ import java.util.Optional;
 @PropertySource (value = "classpath:ValidationMessages.properties", encoding = "UTF-8")
 public class IncludeAddressToAccountController {
 
-	@Value ("${id.invalid}")
+	@Value ("${account-proposal.id.invalid}")
 	private String invalidAccountProposalIdMessage;
 
 	private final EntityManager entityManager;
@@ -45,7 +45,7 @@ public class IncludeAddressToAccountController {
 		var accountProposalOptional = Optional.ofNullable(this.entityManager.find(AccountProposal.class, id));
 		var accountProposal = accountProposalOptional.orElseThrow(() -> new EntityNotFoundException(invalidAccountProposalIdMessage));
 
-		Address newAddress = includeAddressToAccountProposalRequest.createAddress();
+		Address newAddress = includeAddressToAccountProposalRequest.toModel();
 		accountProposal.setAddress(newAddress);
 		this.entityManager.merge(accountProposal);
 

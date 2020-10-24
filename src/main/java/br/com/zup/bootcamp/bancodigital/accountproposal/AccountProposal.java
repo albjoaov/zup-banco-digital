@@ -1,5 +1,6 @@
 package br.com.zup.bootcamp.bancodigital.accountproposal;
 
+import br.com.zup.bootcamp.bancodigital.accountproposal.accept.DocumentStatus;
 import br.com.zup.bootcamp.bancodigital.accountproposal.address.Address;
 import br.com.zup.bootcamp.bancodigital.validators.MoreThan18Years;
 import org.hibernate.validator.constraints.br.CPF;
@@ -7,6 +8,8 @@ import org.hibernate.validator.constraints.br.CPF;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -59,6 +62,9 @@ public class AccountProposal {
 	@Column
 	@NotBlank(groups = StepThreeGroup.class)
 	private String cpfFileUrl;
+
+	@Enumerated(value = EnumType.STRING)
+	private DocumentStatus documentStatus;
 
 	/**
 	 * Framework usage only!
@@ -132,6 +138,10 @@ public class AccountProposal {
 		if(!stateErrors.isEmpty()) throw new ConstraintViolationException("Invalid states has been found", stateErrors);
 
 		this.cpfFileUrl = cpfFileUrl;
+	}
+
+	public void setDocumentStatus (DocumentStatus documentStatus) {
+		this.documentStatus = documentStatus;
 	}
 
 	public void checkIfProcessIsComplete () {

@@ -29,7 +29,7 @@ public class IncludeAddressToAccountProposalRequest {
 	@NotBlank
 	private String state;
 
-	public Address createAddress () {
+	public Address toModel () {
 		return new Address(this.cep, this.street, this.neighborhood, this.complement, this.city, this.state);
 	}
 }
