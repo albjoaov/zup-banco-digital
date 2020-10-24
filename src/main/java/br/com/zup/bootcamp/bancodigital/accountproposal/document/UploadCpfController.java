@@ -24,7 +24,7 @@ import java.util.Optional;
 @PropertySource (value = "classpath:ValidationMessages.properties", encoding = "UTF-8")
 public class UploadCpfController {
 
-	@Value ("${id.invalid}")
+	@Value ("${account-proposal.id.invalid}")
 	private String invalidAccountProposalIdMessage;
 
 	private final EntityManager entityManager;

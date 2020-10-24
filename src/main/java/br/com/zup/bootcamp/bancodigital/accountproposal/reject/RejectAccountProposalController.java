@@ -20,7 +20,7 @@ import java.util.Optional;
 @PropertySource (value = { "classpath:ValidationMessages.properties", "classpath:MailConfig.properties" }, encoding = "UTF-8")
 public class RejectAccountProposalController {
 
-	@Value ("${id.invalid}")
+	@Value ("${account-proposal.id.invalid}")
 	private String invalidAccountProposalIdMessage;
 
 	@Value("${account-reject.mail.subject}")
